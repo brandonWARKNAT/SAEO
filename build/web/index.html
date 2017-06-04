@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SAEO</title>
+   
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  </head>
+  <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+  	<!--banner-->
+	<section id="banner" class="banner">
+		<div class="bg-color">
+			<nav class="navbar navbar-default navbar-fixed-top">
+			  <div class="container">
+			  	<div class="col-md-12">
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+				      <a class="navbar-brand" href="#"><img src="img/logo.png" class="img-responsive" style="width: 140px; margin-top: -16px;"></a>
+				    </div>
+				    <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+				      <ul class="nav navbar-nav">
+				        <li class="active"><a href="#banner">Inicio</a></li>
+				        <li class=""><a href="#agendarConsulta">Agendar Consulta</a></li>
+				        <li class=""><a href="#registrarPaciente">Registrar paciente</a></li>
+                                        <li class=""><a href="login.html">Iniciar Sesión</a></li>
+				      </ul>
+				    </div>
+				</div>
+			  </div>
+			</nav>
+			<div class="container">
+				<div class="row">
+					<div class="banner-info">
+						<div class="banner-logo text-center">
+							<img src="img/logo.png" class="img-responsive">
+						</div>
+						<div class="banner-text text-center">
+							<h1 class="white">Sistema Administrador de Expedientes Odontol&oacutegicos</h1>
+							<p>[Inserte descripcion del consultorio aqui]</p>
+						</div>
+						<div class="overlay-detail text-center">
+			               <a href="#agendarConsulta"><i class="fa fa-angle-down"></i></a>
+			             </div>		
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--consulta-->
+	<section id="agendarConsulta" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="ser-title">Agendar consulta</h2>
+					<hr class="botm-line">
+				</div>
+				<div class="col-md-8 col-sm-8 marb20">
+					<div class="contact-info">
+							<h3 class="cnt-ttl">Informaci&oacuten de la consulta</h3>
+							<div class="space"></div>
+                            <div id="sendmessage">Informaci&oacuten registrada correctamente</div>
+                            <div id="errormessage">Error al registrar la informaci&oacuten</div>
+							<form action="" method="post" role="form" class="contactForm">
+							    <div class="form-group">
+							    	<label for="name">Nombre</label>
+                                    <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Nombre completo del paciente" data-rule="minlen:10" data-msg="Inserte solo caracteres alfabeticos" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                	<label for="Fecha">Fecha</label>
+                                    <input type="date" class="form-control br-radius-zero" name="email" id="Fecha" placeholder="Fecha" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                	<label for="hora">Hora</label>
+                                    <input type="time" class="form-control br-radius-zero" name="subject" id="subject" placeholder="Hora de la cita" />
+                                    <div class="validation"></div>
+                                </div>                                
+								<div class="form-group">
+							    	<label for="asunto">Asunto</label>
+                                    <input type="text" name="asunto" class="form-control br-radius-zero" id="asunto" placeholder="descripcion de la consulta"/>
+                                    <div class="validation"></div>
+                                </div>
+                                	<div class="form-action">
+									<button type="submit" class="btn btn-form">Aceptar</button>
+									<button type="reset" class="btn btn-form">Cancelar</button>
+								</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ consulta-->
+	<!--cta 2-->
+	<section id="cta-2" class="section-padding">
+		<div class="container">
+			<div class=" row">
+				<div class="col-md-2"></div>
+	            <div class="text-right-md col-md-4 col-sm-4">
+	              <h2 class="section-title white lg-line">Acerca de nosotros...</h2>
+	            </div>
+	            <div class="col-md-4 col-sm-5">
+	            [Inserte descripcion aqui]
+	              <p class="text-right text-primary"><i>— Ana Luisa Sanchez Merlin</i></p>
+	            </div>
+	            <div class="col-md-2"></div>
+	        </div>
+		</div>
+	</section>
+	<!--cta-->
+	<!--Paciente-->
+	<section id="registrarPaciente" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="ser-title">Registrar Paciente</h2>
+					<hr class="botm-line">
+				</div>
+				<div class="col-md-8 col-sm-8 marb20">
+					<div class="contact-info">
+							<h3 class="cnt-ttl">Informaci&oacuten del paciente</h3>
+							<div class="space"></div>
+                            <div id="sendmessage">Informaci&oacuten registrada correctamente</div>
+                            <div id="errormessage">Error al registrar la informaci&oacuten</div>
+							<form action="" method="post" role="form" class="contactForm">
+							    <div class="form-group">
+                                    <input type="text" name="name" class="form-control br-radius-zero" id="name" placeholder="Nombre completo" data-rule="minlen:10" data-msg="Please enter at least 4 chars" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control br-radius-zero" name="email" id="email" placeholder="Correo electronico" data-rule="email" data-msg="Please enter a valid email" />
+                                    <div class="validation"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control br-radius-zero" name="subject" id="subject" placeholder="Numero telefonico" data-rule="minlen:10" data-msg="Please enter at least 10 chars of subject" />
+                                    <div class="validation"></div>
+                                </div>
+                                
+								<div class="form-action">
+									<button type="submit" class="btn btn-form">Aceptar</button>
+									<button type="reset" class="btn btn-form">Cancelar</button>
+								</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ costos-->
+	<section id="consultarCostos" class="section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="ser-title">Costos</h2>
+					<hr class="botm-line">
+				</div>
+				<div class="col-md-8 col-sm-8 marb20">
+					<table>
+						<tr>
+							<th>Servicio</th><th>Costo</th>
+						</tr>
+						<tr>
+							<td>Endodoncia</td><td>$900</td>
+						</tr>
+						<tr>
+							<td>Ortodoncia</td><td>$1000</td>
+						</tr>
+						<tr>
+							<td>Periodoncia</td><td>$1100</td>
+						</tr>
+						<tr>
+							<td>Cirugia Oral</td><td>$9000</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ costos-->
+	<!--footer-->
+	<footer id="footer">
+		<div class="top-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4 marb20">
+							<div class="ftr-tle">
+								<h4 class="white no-padding">Acerca de nosotros</h4>
+							</div>
+							<div class="info-sec">
+								<p>[Inserte una descripcion aqui]</p>
+							</div>
+					</div>
+					<div class="col-md-4 col-sm-4 marb20">
+						<div class="ftr-tle">
+							<h4 class="white no-padding">Siguenos en nuestras redes sociales</h4>
+						</div>
+						<div class="info-sec">
+							<ul class="social-icon">
+								<li class="bglight-blue"><i class="fa fa-facebook"></i></li>
+								<li class="bgred"><i class="fa fa-google-plus"></i></li>
+								<li class="bgdark-blue"><i class="fa fa-linkedin"></i></li>
+								<li class="bglight-blue"><i class="fa fa-twitter"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-line">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						© Copyright Medilab Theme. All Rights Reserved
+                        <div class="credits">
+                            <!-- 
+                                All the links in the footer should remain intact. 
+                                You can delete the links only if you purchased the pro version.
+                                Licensing information: https://bootstrapmade.com/license/
+                                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Medilab
+                            -->
+                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--/ footer-->
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+    
+  </body>
+</html>
