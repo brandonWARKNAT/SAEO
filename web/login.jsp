@@ -1,21 +1,38 @@
+<%-- 
+    Document   : login
+    Created on : Jun 10, 2017, 8:16:00 PM
+    Author     : robot-boy
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="model.*" %>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html lang="es">
     <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SAEO login</title>
-    
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>SAEO login</title>
 
-  </head>
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <%
+        // Redirect user to its respective dashboard if already logged in
+        BeanUsuario user = null;
+        BeanPaciente paciente = null;
+        if(session.getAttribute("user") != null){
+            user = (BeanUsuario)session.getAttribute("user");
+            paciente = user.getPaciente();
+            if(paciente != null){
+                response.sendRedirect("dashboardPaciente.jsp");
+            }
+            else{
+                response.sendRedirect("dashboardOdontologo.jsp");
+            }
+        }
+    %>
     <body data-spy="scroll" data-target=".navbar" data-offset="60">
         <section class="banner">
             <div class="nav-bg-color">
@@ -53,7 +70,11 @@ and open the template in the editor.
                             <div class="col-md-8 col-sm-8 marb20">
                                 <div class="contact-info">
                                     <div id="sendmessage">Informaci&oacuten registrada correctamente</div>
-                                    <div id="errormessage">Error al registrar la informaci&oacuten</div>                                    
+                                    <%
+                                        if(request.getParameter("error") != null){%>
+                                        <div id="errormessage"><%= request.getParameter("error") %></div>                                    
+                                        <%}
+                                    %>
                                    <form action="loginServlet" method="post" role="form" class="contactForm">
                                         <div class="form-group">
                                             <label for="email">Correo electronico: </label>

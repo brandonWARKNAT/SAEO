@@ -5,14 +5,12 @@
  */
 package model;
 
-import java.beans.*;
-import java.io.Serializable;
-
 /**
  *
  * @author robot-boy
  */
 import java.sql.*;
+import java.util.Objects;
 import javax.servlet.ServletContext;
 
 public class BeanUsuario {
@@ -22,19 +20,39 @@ public class BeanUsuario {
     Integer idOdontologo = null;
     private String correo = new String();
     private String password = new String();
-    
     private ServletContext context;
+    
+    private BeanPaciente paciente = null;
+    // private BeanOdontologo odontologo;
                     
-                
+    public void setPaciente(int idPaciente){
+        try{
+          Connection con = DatabaseConnector.getConnection(context);
+          if (con != null){
+              PreparedStatement ps = con.prepareStatement("SELECT * FROM Paciente WHERE idPaciente = ?");
+              ps.setInt(1, idPaciente);
+              
+              ps.executeQuery();
+              ResultSet rs = ps.getResultSet();
 
+              if(rs.next()){
+                   paciente = new BeanPaciente(idPaciente, rs.getString("nombre"), rs.getString("descripcion"), rs.getString("sexo"), rs.getString("edad"));
+              }
+              
+              con.close();
+          }
+          
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        } 
+        
+    }
     
     public void setEmail(String email){
         this.correo = email;
     }
-    
-    public void setPaciente(int paciente_id){
-        this.idPaciente = paciente_id;
-    }
+   
     
     public void setOdontologo(int odontologo_id){
         this.idOdontologo = odontologo_id;
@@ -46,6 +64,10 @@ public class BeanUsuario {
     
     public void setPassword(String password){
         this.password = password;
+    }
+    
+    public boolean isPaciente(){
+        return this.idPaciente != null && !Objects.equals(this.idPaciente, "");
     }
     
     public String getEmail(){
@@ -60,7 +82,6 @@ public class BeanUsuario {
         try{
             Connection con = DatabaseConnector.getConnection(context);
             if(con != null){
-                System.out.println("Información read User");
                 
                 PreparedStatement ps = con.prepareStatement("SELECT * FROM Usuario WHERE correo = ? AND password = ?");
                 ps.setString(1, email);
@@ -70,7 +91,6 @@ public class BeanUsuario {
                 ResultSet rs = ps.getResultSet();
                 
                 if(rs.next()){
-                    System.out.println("Entre alguna vez aquí");
                     this.correo = email;
                     this.password = password;
                     this.idOdontologo = rs.getInt("idOdontologo");
@@ -87,8 +107,12 @@ public class BeanUsuario {
         
     }
     
-    public int getPaciente(){
+    public int getPacienteID(){
         return idPaciente;
+    }
+    
+    public BeanPaciente getPaciente(){
+        return paciente;
     }
     
     public int getOdontologo(){

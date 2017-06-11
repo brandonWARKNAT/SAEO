@@ -24,6 +24,10 @@
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>servlets.loginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultaController</servlet-name>
+        <servlet-class>servlets.ConsultaController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletConsulta</servlet-name>
         <url-pattern>/consulta</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
         <url-pattern>/loginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultaController</servlet-name>
+        <url-pattern>/ConsultaController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

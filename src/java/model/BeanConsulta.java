@@ -13,21 +13,25 @@ import java.util.Date;
  * @author robot-boy
  */
 public class BeanConsulta {
-    private int ID;
+    private Integer idConsulta;
     private Date date = null;
-    private String client_id = new String();
+    private Integer idPaciente = null;
+    private Integer idOdontologo = null;
     private ServletContext context;
     
-    public void setID(int id){
-        this.ID = id;
+    public BeanConsulta(int idConsulta, int idPaciente, int idOdontologo, Date date){
+        this.idConsulta = idConsulta;
+        this.idPaciente = idPaciente;
+        this.idOdontologo = idOdontologo;
+        this.date = date;
     }
     
     public void setDate(Date date){
         this.date = date;
     }
     
-    public void setClient(String client_id ){
-        this.client_id = client_id;
+    public void setPaciente(int idPaciente){
+        this.idPaciente = idPaciente;
     }
     
     public void setContext(ServletContext context){
@@ -35,28 +39,41 @@ public class BeanConsulta {
     }
     
     public int getID(){
-        return ID;
+        return idConsulta;
     }
     
-    public Date getDate(){
+    public Date getFecha(){
         return date;
     }
     
-    public String getClient(){
-        return client_id;
+    public int getPaciente(){
+        return idPaciente;
+    }
+    
+    public int getIdOdontologo(){
+        return idOdontologo;
+    }
+    
+    public String getNombreOdontologo(){
+        return "Doctor";
+    }
+    
+    public String getEstado(){
+        return "Lista";
     }
         
     public void reset(){
-        this.ID = 0;
+        this.idConsulta = null;
+        this.idOdontologo = null;
         this.date = null;
-        this.client_id = new String();
+        this.idPaciente = null;
         
     }
     
     public void read(int id)
     {
         this.reset();
-        this.ID = id;
+        this.idConsulta = id;
         
         try {
             Connection con = DatabaseConnector.getConnection(context);
@@ -66,8 +83,8 @@ public class BeanConsulta {
                 ps.executeQuery();
                 ResultSet rs = ps.getResultSet();
                 if (rs.next()){
-                    this.ID = id;
-                    this.client_id = rs.getString("client_id");
+                    this.idConsulta = id;
+                    this.idPaciente = rs.getInt("Paciente_idPaciente");
                     this.date = rs.getDate("date");
                 }
                 con.close();
@@ -79,8 +96,8 @@ public class BeanConsulta {
 
     }
     
-    public void create(int id, Date date, String client_id){
-        this.ID = id;
+    public void create(int id, Date date, int idPaciente){
+        this.idConsulta = id;
         
         try{
             Connection con = DatabaseConnector.getConnection(context);
@@ -89,12 +106,12 @@ public class BeanConsulta {
                 
                 PreparedStatement ps = con.prepareStatement("INSERT INTO consulta values(?,?)");
                 ps.setDate(1, java.sql.Date.valueOf(date.toString()));
-                ps.setString(2, client_id);
+                ps.setInt(2, idPaciente);
                 
                 ps.execute();
                 
                 this.date = date;
-                this.client_id = client_id;
+                this.idPaciente = idPaciente;
                 con.close();
             }
         }
@@ -103,18 +120,18 @@ public class BeanConsulta {
         } 
     }
     
-    public void update(int id, Date date, String client_id){
+    public void update(int id, Date date, int idPaciente){
         try {
             Connection con = DatabaseConnector.getConnection(context);
             if (con != null) {
                 PreparedStatement ps = con.prepareStatement("UPDATE consulta SET client_id = ?, date = ? where id_consulta = ?");
                 ps.setInt(4, id);
-                ps.setString(1, client_id);
+                ps.setInt(1, idPaciente);
                 ps.setDate(2, java.sql.Date.valueOf(date.toString()));
                 
                 ps.execute();
-                this.ID = id;
-                this.client_id = client_id;
+                this.idConsulta = id;
+                this.idPaciente = idPaciente;
                 this.date = date;
                 
                 con.close();

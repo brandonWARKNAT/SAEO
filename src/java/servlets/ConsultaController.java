@@ -8,24 +8,16 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
-
-import model.BeanUsuario;
+import org.json.*;
 
 /**
  *
  * @author robot-boy
  */
-@WebServlet("/LoginServlet")
-public class loginServlet extends HttpServlet {
+public class ConsultaController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,22 +28,18 @@ public class loginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final long serialVersionUID = 1L;
-    
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet loginServlet</title>");            
+            out.println("<title>Servlet ConsultaController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet loginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ConsultaController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -84,43 +72,12 @@ public class loginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        ServletContext context = getServletContext();
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        JSONObject respuesta = new JSONObject();
+        respuesta.put("success", "true");
         
-        BeanUsuario user = new BeanUsuario(); 
-        user.setContext(context);
-        user.readUser(email, password);
-        System.out.println(user.getPassword());
-        
-        if (password.equals(user.getPassword()) && email.equals(user.getEmail())) {
-            HttpSession session = request.getSession();
-            // Agregamos el usuario a la sesion pero hay que saber si es usuario o paciente
-            session.setAttribute("user", user);
-            session.setMaxInactiveInterval(60 * 60);
-            
-            Cookie userName = new Cookie("user", user.getEmail());
-            //setting cookie to expiry in 30 mins
-            userName.setMaxAge(60 * 60);
-            response.addCookie(userName);
-            
-            if(user.isPaciente()){
-                user.setPaciente(user.getPacienteID());
-                response.sendRedirect("dashboardPaciente.jsp");
-            }
-            else{
-                response.sendRedirect("dashboardOdontologo.jsp");
-            }
-            
-        } else {
-            request.setAttribute("error", "Usuario no encontrado. Verifica correo y contraseña.");
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.jsp");
-            rd.forward(request, response);
-//            PrintWriter out = response.getWriter();
-//            out.println("<div class='alert alert-warning'>Usuario no encontrado. Verificar correo y contraseña.</div>");
-//            rd.include(request, response);
-        }
-        
+        out.print(respuesta);
     }
 
     /**
