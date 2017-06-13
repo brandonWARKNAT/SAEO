@@ -25,13 +25,13 @@
         BeanPaciente paciente = null;
         
         if(session.getAttribute("user") == null){
-            response.sendRedirect("login.html");
+            response.sendRedirect("login.jsp");
         }            
         else{
             user = (BeanUsuario)session.getAttribute("user");
             paciente = user.getPaciente();
             if(paciente == null){
-                response.sendRedirect("login.html");
+                response.sendRedirect("login.jsp");
             }
         }
     %>
@@ -77,6 +77,7 @@
                                 <tr>
                                     <!-- Campos de la tabla consulta -->
                                     <th>Fecha</th>
+                                    <th>Servicio</th>  
                                     <th>Odontologo</th>
                                     <th>Estado</th>
                                 </tr>
@@ -87,6 +88,7 @@
                                     for(BeanConsulta consulta: consultas){%>
                                         <tr>
                                             <td><%= consulta.getFecha() %></td>
+                                            <td><%= consulta.getNombreServicio()%></td>
                                             <td><%= consulta.getNombreOdontologo() %></td>
                                             <td><%= consulta.getEstado() %></td>
                                         </tr>
@@ -111,7 +113,8 @@
                    </div>
                    <div class="modal-body">
                        <form action="" id="create-appointment">
-                           <div class="form-group">
+                            <input type="hidden" name="action" value="create">
+                            <div class="form-group">
                                 <label for="service">Servicio: </label>
                                <select placeholder="Servicio" name="service" id="" class="form-control">
                                    <option value=""></option>
@@ -119,11 +122,11 @@
                                        BeanServicio serv = new BeanServicio(getServletContext());
                                        ArrayList<BeanServicio> servicios = serv.getServicios();
                                        for(BeanServicio servicio: servicios){%>
-                                            <option value=""><%= servicio.getNombre() %></option>
+                                            <option value="<%= servicio.getID() %>"><%= servicio.getNombre() %></option>
                                        <%}
                                    %>
                                </select>
-                           </div>
+                            </div>
                             <div class="form-group">
                                 <div class="dtp-container">
                                     <label for="datetime">Selecciona la hora: </label>

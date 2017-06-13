@@ -7,6 +7,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import model.BeanPaciente;
+import model.BeanResConsulta;
 
 
 import model.BeanUsuario;
@@ -91,9 +94,9 @@ public class loginServlet extends HttpServlet {
         BeanUsuario user = new BeanUsuario(); 
         user.setContext(context);
         user.readUser(email, password);
-        System.out.println(user.getPassword());
         
         if (password.equals(user.getPassword()) && email.equals(user.getEmail())) {
+            
             HttpSession session = request.getSession();
             // Agregamos el usuario a la sesion pero hay que saber si es usuario o paciente
             session.setAttribute("user", user);
@@ -103,10 +106,24 @@ public class loginServlet extends HttpServlet {
             //setting cookie to expiry in 30 mins
             userName.setMaxAge(60 * 60);
             response.addCookie(userName);
-            
+
             if(user.isPaciente()){
                 user.setPaciente(user.getPacienteID());
                 response.sendRedirect("dashboardPaciente.jsp");
+            }
+            else if(user.isOdontologo()){
+                user.setOdontologo(user.getOdontologoID());
+                context = getServletContext();
+                
+                BeanPaciente paciente = new BeanPaciente();
+                BeanResConsulta cons = new BeanResConsulta();
+                
+                paciente.setContext(context);
+                cons.setContext(context);
+
+                System.out.println("2.0");
+                
+                response.sendRedirect("dashboardOdontologo.jsp"); 
             }
             else{
                 response.sendRedirect("dashboardOdontologo.jsp");

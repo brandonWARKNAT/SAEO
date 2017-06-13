@@ -5,8 +5,14 @@
  */
 package servlets;
 
+import com.mysql.jdbc.Statement;
 import java.io.IOException;
+import model.*;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -75,9 +81,61 @@ public class ConsultaController extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         JSONObject respuesta = new JSONObject();
-        respuesta.put("success", "true");
         
-        out.print(respuesta);
+        try{
+            String accion = request.getParameter("accion");
+            int paciente = Integer.valueOf(request.getParameter("paciente"));
+            int servicio = Integer.valueOf(request.getParameter("service"));
+            
+            switch(accion){
+                case "create":
+                {
+                    
+                    try {
+                        Connection con = DatabaseConnector.getConnection(getServletContext());
+
+                        if (con != null) {
+                            // fecha, Paciente_idPaciente, estado, mensaje
+                            PreparedStatement ps = con.prepareStatement("INSERT INTO Consulta (Fecha, Paciente_idPaciente, Servicio_idServicio, Estado, Mensaje) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                            
+                            ps.setString(1, request.getParameter("datetime"));
+                            ps.setInt(2, paciente);
+                            ps.setInt(3, servicio);
+                            ps.setString(4, "SIN CONFIRMAR");
+                            ps.setString(5, request.getParameter("message"));
+                            
+                            ps.executeUpdate();
+                            
+                            ResultSet rs = ps.getGeneratedKeys();
+                            
+                            rs.next();
+                            int auto_id = rs.getInt(1);
+                            
+                            BeanConsulta consulta = new BeanConsulta(auto_id, paciente, 1, request.getParameter("datetime"));
+                            
+                            respuesta.put("servicio", servicio);
+                            respuesta.put("fecha", consulta.getFecha());
+                            respuesta.put("odontologo", consulta.getNombreOdontologo());
+                            con.close();
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                    respuesta.put("success", "true");
+                    out.print(respuesta);
+                    break;
+                }
+                default:{
+                    break;
+                }
+                    
+            }
+            
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     /**

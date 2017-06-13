@@ -22,13 +22,15 @@
         // Redirect user to its respective dashboard if already logged in
         BeanUsuario user = null;
         BeanPaciente paciente = null;
+        BeanOdontologo odontologo = null;
         if(session.getAttribute("user") != null){
             user = (BeanUsuario)session.getAttribute("user");
             paciente = user.getPaciente();
+            odontologo = user.getOdontologo();
             if(paciente != null){
                 response.sendRedirect("dashboardPaciente.jsp");
             }
-            else{
+            else if(odontologo != null){
                 response.sendRedirect("dashboardOdontologo.jsp");
             }
         }

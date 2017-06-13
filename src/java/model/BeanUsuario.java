@@ -23,6 +23,7 @@ public class BeanUsuario {
     private ServletContext context;
     
     private BeanPaciente paciente = null;
+    private BeanOdontologo odontologo = null;
     // private BeanOdontologo odontologo;
                     
     public void setPaciente(int idPaciente){
@@ -55,7 +56,25 @@ public class BeanUsuario {
    
     
     public void setOdontologo(int odontologo_id){
-        this.idOdontologo = odontologo_id;
+        try{
+          Connection con = DatabaseConnector.getConnection(context);
+          if (con != null){
+              PreparedStatement ps = con.prepareStatement("SELECT * FROM odontologo WHERE idOdontologo = ?");
+              ps.setInt(1, odontologo_id);
+              ps.executeQuery();
+              ResultSet rs = ps.getResultSet();
+
+              if(rs.next()){
+                   odontologo = new BeanOdontologo(rs.getString("Nombre"), rs.getString("Cedula"), 1);
+              }
+              
+              con.close();
+          }
+          
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
     
     public void setContext(ServletContext context){
@@ -67,7 +86,11 @@ public class BeanUsuario {
     }
     
     public boolean isPaciente(){
-        return this.idPaciente != null && !Objects.equals(this.idPaciente, "");
+        return this.idPaciente != null && !Objects.equals(this.idPaciente, "") && this.idPaciente!=0;
+    }
+
+    public boolean isOdontologo(){
+        return this.idOdontologo != null && !Objects.equals(this.idOdontologo, "") && this.idOdontologo!=0;
     }
     
     public String getEmail(){
@@ -110,13 +133,17 @@ public class BeanUsuario {
     public int getPacienteID(){
         return idPaciente;
     }
+
+    public int getOdontologoID(){
+        return idOdontologo;
+    }
     
     public BeanPaciente getPaciente(){
         return paciente;
     }
     
-    public int getOdontologo(){
-        return idOdontologo;
+    public BeanOdontologo getOdontologo(){
+        return odontologo;
     }
     
     public void reset()

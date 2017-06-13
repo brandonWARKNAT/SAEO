@@ -38,6 +38,10 @@ public class BeanServicio {
         return nombre;
     }
     
+    public int getID(){
+        return idServicio;
+    }
+    
     public ArrayList<BeanServicio> getServicios(){
         ArrayList<BeanServicio> servicios = new ArrayList<>();
         

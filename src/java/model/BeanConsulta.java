@@ -14,19 +14,22 @@ import java.util.Date;
  */
 public class BeanConsulta {
     private Integer idConsulta;
-    private Date date = null;
+    private String date = null;
     private Integer idPaciente = null;
     private Integer idOdontologo = null;
+    private Integer idServicio = null;
+    private String mensaje = null;
     private ServletContext context;
     
-    public BeanConsulta(int idConsulta, int idPaciente, int idOdontologo, Date date){
+    public BeanConsulta(int idConsulta, int idPaciente, int idOdontologo, String date){
         this.idConsulta = idConsulta;
         this.idPaciente = idPaciente;
         this.idOdontologo = idOdontologo;
         this.date = date;
+        this.mensaje = mensaje;
     }
     
-    public void setDate(Date date){
+    public void setDate(String date){
         this.date = date;
     }
     
@@ -42,7 +45,7 @@ public class BeanConsulta {
         return idConsulta;
     }
     
-    public Date getFecha(){
+    public String getFecha(){
         return date;
     }
     
@@ -56,6 +59,10 @@ public class BeanConsulta {
     
     public String getNombreOdontologo(){
         return "Doctor";
+    }
+    
+    public String getNombreServicio(){
+        return "Servicio";
     }
     
     public String getEstado(){
@@ -85,7 +92,7 @@ public class BeanConsulta {
                 if (rs.next()){
                     this.idConsulta = id;
                     this.idPaciente = rs.getInt("Paciente_idPaciente");
-                    this.date = rs.getDate("date");
+                    this.date = rs.getString("date");
                 }
                 con.close();
             }
@@ -96,7 +103,7 @@ public class BeanConsulta {
 
     }
     
-    public void create(int id, Date date, int idPaciente){
+    public void create(int id, String date, int idPaciente){
         this.idConsulta = id;
         
         try{
@@ -120,7 +127,7 @@ public class BeanConsulta {
         } 
     }
     
-    public void update(int id, Date date, int idPaciente){
+    public void update(int id, String date, int idPaciente){
         try {
             Connection con = DatabaseConnector.getConnection(context);
             if (con != null) {
